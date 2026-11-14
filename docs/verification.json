@@ -1,0 +1,44 @@
+{
+  "Success": true,
+  "Programs": [
+    "CPU-Z",
+    "DDU",
+    "Dism\u002B\u002B",
+    "Everything",
+    "GPU-Z",
+    "NVIDIA Inspector",
+    "Profile Inspector",
+    "Ryzen Tool",
+    "TM5",
+    "ZenTimings"
+  ],
+  "Excluded": [
+    "AIDA64",
+    "HWiNFO",
+    "Geek Uninstaller",
+    "Thaiphoon"
+  ],
+  "ExactBundledExecutables": true,
+  "CacheReuse": true,
+  "CopyAndOverwriteVerified": true,
+  "AdministratorStartInfo": true,
+  "InstallCancellation": true,
+  "Previews": [
+    {
+      "Width": 1600,
+      "Height": 900,
+      "Buttons": 15
+    },
+    {
+      "Width": 1280,
+      "Height": 800,
+      "Buttons": 15
+    },
+    {
+      "Width": 1024,
+      "Height": 768,
+      "Buttons": 15
+    }
+  ],
+  "Scope": "Compiled launcher, real embedded package, copy path and confirmation UI verified. Hardware tuning and stress tests were not executed."
+}

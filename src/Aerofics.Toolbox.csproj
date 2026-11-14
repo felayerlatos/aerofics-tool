@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <PlatformTarget>x64</PlatformTarget>
+    <AssemblyName>AeroficsToolbox</AssemblyName>
+    <RootNamespace>AeroficsLauncher</RootNamespace>
+    <Version>2026.11.15</Version>
+    <PublishSingleFile>true</PublishSingleFile>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>../assets/app.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="payload.enc" LogicalName="Aerofics.Payload.enc" />
+    <EmbeddedResource Include="../assets/wallpaper.jpg" LogicalName="Aerofics.Wallpaper.jpg" />
+  </ItemGroup>
+  <Target Name="CheckPayload" BeforeTargets="BeforeBuild">
+    <Error Condition="!Exists('payload.enc') Or !Exists('PayloadKey.g.cs')" Text="Run Pack-Payload.ps1 with your tools directory before building. See README.md." />
+  </Target>
+</Project>

@@ -1,0 +1,46 @@
+<UserControl x:Class="SystemOptimizer.App.Views.SchedulerRulesView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <ScrollViewer VerticalScrollBarVisibility="Auto"><StackPanel Margin="0,0,8,6">
+    <StackPanel IsEnabled="{Binding CanEdit}">
+      <Grid Margin="0,0,0,16"><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="16"/><ColumnDefinition/></Grid.ColumnDefinitions>
+        <Border Style="{StaticResource SoftCard}"><StackPanel>
+          <DockPanel><Button DockPanel.Dock="Right" Content="添加程序" Tag="games" Click="Pick_Click" Style="{StaticResource QuietButtonStyle}"/><TextBlock Text="游戏程序" Style="{StaticResource CardTitleStyle}" VerticalAlignment="Center"/></DockPanel>
+          <TextBox Text="{Binding Games, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" Height="124" VerticalScrollBarVisibility="Auto" Margin="0,14,0,12" ToolTip="每行填写一个 EXE 名称或完整路径"/>
+          <Button Content="浏览游戏 EXE…" Tag="games" Click="Browse_Click" Style="{StaticResource QuietButtonStyle}" HorizontalAlignment="Left"/>
+        </StackPanel></Border>
+        <Border Grid.Column="2" Style="{StaticResource SoftCard}"><StackPanel>
+          <DockPanel><Button DockPanel.Dock="Right" Content="添加程序" Tag="backgrounds" Click="Pick_Click" Style="{StaticResource QuietButtonStyle}"/><TextBlock Text="非游戏程序" Style="{StaticResource CardTitleStyle}" VerticalAlignment="Center"/></DockPanel>
+          <TextBox Text="{Binding Backgrounds, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" Height="124" VerticalScrollBarVisibility="Auto" Margin="0,14,0,12" ToolTip="每行填写一个 EXE 名称或完整路径"/>
+          <Button Content="浏览程序 EXE…" Tag="backgrounds" Click="Browse_Click" Style="{StaticResource QuietButtonStyle}" HorizontalAlignment="Left"/>
+        </StackPanel></Border>
+      </Grid>
+      <Border Style="{StaticResource SoftCard}" Margin="0,0,0,16"><Grid><Grid.ColumnDefinitions><ColumnDefinition Width="170"/><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+        <StackPanel VerticalAlignment="Center"><TextBlock Text="排除项目" Style="{StaticResource CardTitleStyle}"/><TextBlock Text="优先于所有调度规则" Style="{StaticResource CaptionTextStyle}" Margin="0,5,0,0"/></StackPanel>
+        <TextBox Grid.Column="1" Text="{Binding Excluded, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" Height="68" VerticalScrollBarVisibility="Auto"/>
+        <Button Grid.Column="2" Content="添加" Tag="excluded" Click="Pick_Click" Style="{StaticResource QuietButtonStyle}" Margin="14,0,0,0" VerticalAlignment="Center"/>
+      </Grid></Border>
+      <Border Style="{StaticResource SoftCard}" Margin="0,0,0,16"><StackPanel>
+        <TextBlock Text="核心范围与调度选项" Style="{StaticResource CardTitleStyle}"/>
+        <TextBlock Text="启用“核心顺序”的程序使用排序策略；其余程序使用下面的核心范围。" Style="{StaticResource CaptionTextStyle}" Margin="0,8,0,18"/>
+        <Grid><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="24"/><ColumnDefinition/></Grid.ColumnDefinitions>
+          <StackPanel><TextBlock Text="游戏核心范围" Style="{StaticResource FieldLabelStyle}"/><ComboBox ItemsSource="{Binding CcdChoices}" DisplayMemberPath="Label" SelectedValuePath="Id" SelectedValue="{Binding GameCcd}"/>
+            <CheckBox Content="非游戏程序使用其余核心" IsChecked="{Binding BackgroundIsolation}" Margin="0,14,0,0"/>
+          </StackPanel>
+          <StackPanel Grid.Column="2"><TextBlock Text="游戏进程优先级" Style="{StaticResource FieldLabelStyle}"/><ComboBox ItemsSource="{Binding Priorities}" DisplayMemberPath="Label" SelectedValuePath="Value" SelectedValue="{Binding GamePriority}"/>
+            <CheckBox Content="配置守护：持续重新应用范围和优先级" IsChecked="{Binding Enforce}" Margin="0,14,0,0"/>
+          </StackPanel>
+        </Grid>
+        <Expander Header="手动选择核心" Margin="0,22,0,0"><StackPanel Margin="0,14,0,0">
+          <CheckBox Content="使用自选 CPU，覆盖游戏 L3 分组" IsChecked="{Binding UseCustomCpus}" Margin="0,0,0,10"/>
+          <Border Background="{DynamicResource ControlBrush}" CornerRadius="8" Padding="12"><ScrollViewer Height="160" VerticalScrollBarVisibility="Auto"><ItemsControl ItemsSource="{Binding Cpus}"><ItemsControl.ItemsPanel><ItemsPanelTemplate><UniformGrid Columns="4"/></ItemsPanelTemplate></ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate><DataTemplate><CheckBox Content="{Binding Processor}" ToolTip="{Binding Details}" IsChecked="{Binding Selected}" Margin="6,7"/></DataTemplate></ItemsControl.ItemTemplate>
+          </ItemsControl></ScrollViewer></Border>
+          <CheckBox Content="硬亲和性（关闭时使用 CPU Sets）" IsChecked="{Binding StrictAffinity}" IsEnabled="{Binding StrictAvailable}" Margin="0,14,0,0"/>
+        </StackPanel></Expander>
+      </StackPanel></Border>
+    </StackPanel>
+    <Border Style="{StaticResource SoftCard}"><StackPanel><TextBlock Text="工作台设置" Style="{StaticResource CardTitleStyle}"/>
+      <CheckBox Content="最小化到托盘，双击托盘图标恢复窗口" IsChecked="{Binding MinimizeToTray}" Margin="0,16,0,12"/>
+      <CheckBox Content="{Binding StartupLabel}" IsChecked="{Binding StartupEnabled}" IsEnabled="{Binding StartupAvailable}"/>
+    </StackPanel></Border>
+  </StackPanel></ScrollViewer>
+</UserControl>

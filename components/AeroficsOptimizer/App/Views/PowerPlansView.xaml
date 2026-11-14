@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl x:Class="SystemOptimizer.App.Views.PowerPlansView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Background="#00FFFFFF" xmlns:views="clr-namespace:SystemOptimizer.App.Views">
+  <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" PanningMode="VerticalOnly">
+    <StackPanel Margin="0,0,8,22">
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="14" />
+          <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Border Style="{StaticResource CardStyle}" Padding="20">
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+              <TextBlock Text="高性能" Style="{StaticResource CardTitleStyle}" />
+              <TextBlock Text="Windows 内置模板，适合多数插电游戏场景。" Margin="0,5,18,0" Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" />
+            </StackPanel>
+            <Button Grid.Column="1" Content="启用" Style="{StaticResource QuietButtonStyle}" VerticalAlignment="Center" Command="{Binding ActivateHighPerformanceCommand}" />
+          </Grid>
+        </Border>
+        <Border Grid.Column="2" Style="{StaticResource CardStyle}" Padding="20" BorderBrush="{DynamicResource AccentStrongBrush}">
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+              <TextBlock Text="卓越性能" Style="{StaticResource CardTitleStyle}" />
+              <TextBlock Text="从 Windows 官方模板创建，若隐藏则复制后启用。" Margin="0,5,18,0" Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" />
+            </StackPanel>
+            <Button Grid.Column="1" Content="创建并启用" Style="{StaticResource AccentButtonStyle}" VerticalAlignment="Center" Command="{Binding ActivateUltimatePerformanceCommand}" />
+          </Grid>
+        </Border>
+      </Grid>
+      <Border Style="{StaticResource CardStyle}" Padding="18" Margin="0,14,0,0">
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="12" />
+            <RowDefinition Height="170" />
+            <RowDefinition Height="12" />
+            <RowDefinition Height="Auto" />
+          </Grid.RowDefinitions>
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+              <TextBlock Text="本机电源计划" Style="{StaticResource SectionTitleStyle}" />
+              <TextBlock Text="选择后应用；切换不会删除其他方案" Margin="0,4,0,0" Style="{StaticResource SecondaryTextStyle}" />
+            </StackPanel>
+            <TextBlock Grid.Column="1" FontSize="12" VerticalAlignment="Center" Foreground="{DynamicResource SuccessBrush}" Text="{Binding PowerPlanStatus}" />
+          </Grid>
+          <DataGrid Grid.Row="2" AlternationCount="2" ItemsSource="{Binding PowerPlans}" SelectedItem="{Binding SelectedPowerPlan}">
+            <DataGrid.Columns>
+              <DataGridTextColumn Header="电源计划" Width="*" Binding="{Binding Name}" />
+              <DataGridTextColumn Header="状态" Width="140" Binding="{Binding State}" />
+            </DataGrid.Columns>
+          </DataGrid>
+          <Grid Row="4">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="可恢复为本次打开程序前的活动方案。" Style="{StaticResource SecondaryTextStyle}" VerticalAlignment="Center" />
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+              <Button Content="刷新" Style="{StaticResource QuietButtonStyle}" Margin="0,0,8,0" Command="{Binding RefreshPowerPlansCommand}" />
+              <Button Content="恢复打开前方案" Style="{StaticResource QuietButtonStyle}" Margin="0,0,8,0" Command="{Binding RestorePowerPlanCommand}" />
+              <Button Content="删除所选计划" Style="{StaticResource DangerButtonStyle}" Margin="0,0,8,0" Command="{Binding DeletePowerPlanCommand}" />
+              <Button Content="应用所选计划" Style="{StaticResource AccentButtonStyle}" Command="{Binding ApplyPowerPlanCommand}" />
+            </StackPanel>
+          </Grid>
+        </Grid>
+      </Border>
+      <Grid Margin="0,14,0,0">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="1.25*" />
+          <ColumnDefinition Width="14" />
+          <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Border Style="{StaticResource CardStyle}" Padding="19">
+          <Grid>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="12" />
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="12" />
+              <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+              </Grid.ColumnDefinitions>
+              <StackPanel>
+                <TextBlock Text="导入 .pow 电源计划" Style="{StaticResource SectionTitleStyle}" />
+                <TextBlock Text="自动扫描本机文件；导入后由 Windows 回读验证" Margin="0,4,0,0" Style="{StaticResource SecondaryTextStyle}" />
+              </StackPanel>
+              <Button Grid.Column="1" Content="重新扫描" Style="{StaticResource QuietButtonStyle}" Command="{Binding RefreshPowerPlanImportsCommand}" />
+            </Grid>
+            <DataGrid Grid.Row="2" Height="142" AlternationCount="2" ItemsSource="{Binding PowerPlanImports}" SelectedItem="{Binding SelectedPowerPlanImport}">
+              <DataGrid.Columns>
+                <DataGridTextColumn Header="本机文件" Width="*" Binding="{Binding Name}" />
+                <DataGridTextColumn Header="来源" Width="210" Binding="{Binding Source}" />
+              </DataGrid.Columns>
+            </DataGrid>
+            <Grid Row="4">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+              </Grid.ColumnDefinitions>
+              <TextBlock FontSize="12" TextTrimming="CharacterEllipsis" Foreground="{DynamicResource SecondaryTextBrush}" VerticalAlignment="Center" Text="{Binding PowerPlanImportStatus}" />
+              <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <Button Content="选择其他文件" Style="{StaticResource QuietButtonStyle}" Margin="0,0,8,0" Command="{Binding BrowsePowerPlanCommand}" />
+                <Button Content="导入并启用" Style="{StaticResource AccentButtonStyle}" Command="{Binding ImportSelectedPowerPlanCommand}" />
+              </StackPanel>
+            </Grid>
+          </Grid>
+        </Border>
+        <Border Grid.Column="2" Style="{StaticResource CardStyle}" Padding="19">
+          <StackPanel>
+            <TextBlock Text="高级电源选项" Style="{StaticResource SectionTitleStyle}" />
+            <TextBlock Text="显示控制面板中被 Windows 隐藏的处理器、电源和设备策略。只修改显示属性，不改具体参数。" Margin="0,7,0,0" Style="{StaticResource CaptionTextStyle}" LineHeight="20" TextWrapping="Wrap" />
+            <Border Margin="0,14,0,0" Padding="13" CornerRadius="8" Background="{DynamicResource AccentSurfaceBrush}">
+              <TextBlock FontSize="12" LineHeight="19" TextWrapping="Wrap" Foreground="{DynamicResource SecondaryTextBrush}" Text="{Binding AdvancedPowerOptionsStatus}" />
+            </Border>
+            <StackPanel Orientation="Horizontal" Margin="0,16,0,0">
+              <Button Content="解锁所有高级选项" Style="{StaticResource AccentButtonStyle}" Margin="0,0,8,0" Command="{Binding UnlockAdvancedPowerOptionsCommand}" />
+              <Button Content="恢复原显示状态" Style="{StaticResource QuietButtonStyle}" Command="{Binding RestoreAdvancedPowerOptionsCommand}" />
+            </StackPanel>
+            <TextBlock Text="Modern Standby 设备仍可能只允许平衡计划或其派生方案，这是 Windows 电源模型限制。" Margin="0,13,0,0" FontSize="11.5" LineHeight="18" TextWrapping="Wrap" Foreground="{DynamicResource TertiaryTextBrush}" />
+          </StackPanel>
+        </Border>
+      </Grid>
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

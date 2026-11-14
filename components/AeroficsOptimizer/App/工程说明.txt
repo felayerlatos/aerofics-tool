@@ -1,0 +1,21 @@
+Aerofics 性能工作台 2.0 主程序
+
+本目录可以编译 WPF 主程序，不需要原工具箱 EXE。
+Views、Presentation、Configuration、Scheduling 和 Services 为可修改的界面、线程调度、预设及交互代码。
+lib 目录是从原程序分离并清理标识后的功能库，仅保留系统优化所需的依赖。
+功能库以二进制形式提供；本工程不是原工具箱完整源码。
+
+环境：Windows x64，.NET 10 SDK。
+
+编译发布：
+dotnet publish SystemOptimizer.csproj -c Release -r win-x64 --self-contained true -o publish
+
+此命令生成包含完整运行库的发布目录，主程序为 AeroficsOptimizer.App.exe。
+要生成供用户使用的单个压缩 EXE，请运行父目录的 Build.ps1，详见父目录 README.txt。
+Presets 目录中仅保留三个 NVIDIA 全局预设。不要重新加入原机器的显卡绑定条目。
+
+可选自检（只读取系统状态，不应用优化）：
+AeroficsOptimizer.App.exe --self-test verification.json
+自检会在指定位置写出检查结果和通用页面预览；报告仅供本机检查，不必随发行包分发。
+
+恢复记录使用独立目录：%LOCALAPPDATA%\SystemOptimizer\Data

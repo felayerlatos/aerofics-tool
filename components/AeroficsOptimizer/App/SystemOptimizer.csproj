@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType><TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF><Nullable>enable</Nullable><ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>AeroficsOptimizer.App</AssemblyName><RootNamespace>SystemOptimizer.App</RootNamespace>
+    <ApplicationIcon>app.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <AssemblyTitle>Aerofics 性能工作台</AssemblyTitle><Product>Aerofics 性能工作台</Product><Company>Aerofics</Company><Authors></Authors>
+    <Version>2.0.0</Version><DebugType>none</DebugType><DebugSymbols>false</DebugSymbols>
+    <EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
+    <PlatformTarget>x64</PlatformTarget><RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <PublishSingleFile>false</PublishSingleFile><SelfContained>true</SelfContained>
+    <NuGetAudit>false</NuGetAudit>
+    <SatelliteResourceLanguages>zh-Hans;en</SatelliteResourceLanguages>
+  </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Aerofics.Scheduler.Marker" LogicalName="Aerofics.Scheduler.Marker" />
+    <Reference Include="SystemOptimizer.Core"><HintPath>lib/SystemOptimizer.Core.dll</HintPath></Reference>
+    <Reference Include="SystemOptimizer.Windows"><HintPath>lib/SystemOptimizer.Windows.dll</HintPath></Reference>
+    <Reference Include="SystemOptimizer.Infrastructure"><HintPath>lib/SystemOptimizer.Infrastructure.dll</HintPath></Reference>
+    <EmbeddedResource Include="Presets/*.nip"><LogicalName>SystemOptimizer.App.Assets.NvidiaProfiles.%(Filename)%(Extension)</LogicalName></EmbeddedResource>
+  </ItemGroup>
+</Project>

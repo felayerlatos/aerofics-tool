@@ -1,0 +1,44 @@
+<UserControl x:Class="SystemOptimizer.App.Views.OverviewView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <ScrollViewer VerticalScrollBarVisibility="Auto"><StackPanel Margin="0,0,8,0">
+    <Border Style="{StaticResource SoftCard}" Padding="28" Margin="0,0,0,18">
+      <Grid><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+        <StackPanel><TextBlock Text="PROCESSOR" Foreground="{DynamicResource AccentBrush}" FontSize="11" FontWeight="SemiBold"/>
+          <TextBlock Text="{Binding CpuName}" FontSize="26" FontWeight="SemiBold" Margin="0,12,0,8" TextWrapping="Wrap"/>
+          <TextBlock Text="{Binding CpuSummary}" Foreground="{DynamicResource SecondaryTextBrush}" FontSize="14"/>
+        </StackPanel>
+        <Border Grid.Column="1" Width="86" Height="86" CornerRadius="20" BorderThickness="1" BorderBrush="#32675F" Background="#153630" Margin="20,0,0,0">
+          <Grid Margin="20"><Grid.RowDefinitions><RowDefinition/><RowDefinition/><RowDefinition/></Grid.RowDefinitions><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition/><ColumnDefinition/></Grid.ColumnDefinitions>
+            <Rectangle Fill="#70E0CA" Margin="2" RadiusX="2" RadiusY="2"/><Rectangle Grid.Column="1" Fill="#3DA895" Margin="2" RadiusX="2" RadiusY="2"/><Rectangle Grid.Column="2" Fill="#3DA895" Margin="2" RadiusX="2" RadiusY="2"/>
+            <Rectangle Grid.Row="1" Fill="#3DA895" Margin="2" RadiusX="2" RadiusY="2"/><Rectangle Grid.Row="1" Grid.Column="1" Fill="#70E0CA" Margin="2" RadiusX="2" RadiusY="2"/><Rectangle Grid.Row="1" Grid.Column="2" Fill="#3DA895" Margin="2" RadiusX="2" RadiusY="2"/>
+            <Rectangle Grid.Row="2" Fill="#3DA895" Margin="2" RadiusX="2" RadiusY="2"/><Rectangle Grid.Row="2" Grid.Column="1" Fill="#3DA895" Margin="2" RadiusX="2" RadiusY="2"/><Rectangle Grid.Row="2" Grid.Column="2" Fill="#70E0CA" Margin="2" RadiusX="2" RadiusY="2"/>
+          </Grid>
+        </Border>
+      </Grid>
+    </Border>
+    <UniformGrid Columns="3" Margin="0,0,-16,18">
+      <Border Style="{StaticResource SoftCard}" Margin="0,0,16,0"><StackPanel><TextBlock Text="游戏进程" Style="{StaticResource CaptionTextStyle}"/><TextBlock Text="{Binding ActiveGames}" FontSize="38" Margin="0,8,0,5" FontFamily="Segoe UI"/><TextBlock Text="当前受调度器管理" Style="{StaticResource CaptionTextStyle}"/></StackPanel></Border>
+      <Border Style="{StaticResource SoftCard}" Margin="0,0,16,0"><StackPanel><TextBlock Text="非游戏进程" Style="{StaticResource CaptionTextStyle}"/><TextBlock Text="{Binding ActiveBackgrounds}" FontSize="38" Margin="0,8,0,5" FontFamily="Segoe UI"/><TextBlock Text="使用独立核心策略" Style="{StaticResource CaptionTextStyle}"/></StackPanel></Border>
+      <Border Style="{StaticResource SoftCard}" Margin="0,0,16,0"><StackPanel><TextBlock Text="已配置程序" Style="{StaticResource CaptionTextStyle}"/><TextBlock Text="{Binding RuleCount}" FontSize="38" Margin="0,8,0,5" FontFamily="Segoe UI"/><TextBlock Text="只管理规则列表中的程序" Style="{StaticResource CaptionTextStyle}"/></StackPanel></Border>
+    </UniformGrid>
+    <Grid Margin="0,0,0,18"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="18"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+      <Border Style="{StaticResource SoftCard}"><StackPanel>
+        <TextBlock Text="线程调度" Style="{StaticResource SectionTitleStyle}"/>
+        <TextBlock Text="01  添加游戏与非游戏程序" Margin="0,18,0,10"/>
+        <TextBlock Text="02  分别选择核心范围或优先顺序" Margin="0,0,0,10"/>
+        <TextBlock Text="03  点击开始调度，停止时恢复" Margin="0,0,0,16"/>
+        <TextBlock Text="新建线程会自动跟随规则；核心顺序是给 Windows 的调度偏好。" Style="{StaticResource SecondaryTextStyle}" TextWrapping="Wrap"/>
+      </StackPanel></Border>
+      <Border Grid.Column="2" Style="{StaticResource SoftCard}"><StackPanel>
+        <TextBlock Text="系统优化" Style="{StaticResource SectionTitleStyle}"/>
+        <WrapPanel Margin="0,18,0,12"><TextBlock Text="21 项系统设置" Margin="0,0,18,10"/><TextBlock Text="10 类服务分组" Margin="0,0,18,10"/><TextBlock Text="3 套 NVIDIA 预设" Margin="0,0,0,10"/></WrapPanel>
+        <TextBlock Text="系统设置、Win32 调度、电源计划、启动项和显卡预设均可从左侧进入。" Style="{StaticResource SecondaryTextStyle}" TextWrapping="Wrap" Margin="0,0,0,10"/>
+        <TextBlock Text="选择具体项目后应用，恢复操作使用原有恢复记录。" Style="{StaticResource SecondaryTextStyle}" TextWrapping="Wrap"/>
+      </StackPanel></Border>
+    </Grid>
+    <Border Style="{StaticResource SoftCard}"><StackPanel>
+      <DockPanel><TextBlock Text="状态与恢复" FontWeight="SemiBold"/><TextBlock DockPanel.Dock="Right" Text="{Binding CcdSummary}" HorizontalAlignment="Right" Style="{StaticResource CaptionTextStyle}"/></DockPanel>
+      <TextBlock Text="{Binding PendingCount, StringFormat=待恢复进程：{0}}" Style="{StaticResource SecondaryTextStyle}" Margin="0,10,0,4"/>
+      <TextBlock Text="{Binding ErrorDetails}" Foreground="{DynamicResource WarningBrush}" FontSize="12" TextWrapping="Wrap"/>
+    </StackPanel></Border>
+  </StackPanel></ScrollViewer>
+</UserControl>

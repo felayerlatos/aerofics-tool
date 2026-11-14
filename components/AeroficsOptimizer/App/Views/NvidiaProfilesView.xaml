@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl x:Class="SystemOptimizer.App.Views.NvidiaProfilesView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Background="#00FFFFFF" xmlns:views="clr-namespace:SystemOptimizer.App.Views">
+  <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+    <StackPanel Margin="0,0,8,20">
+      <Border Style="{StaticResource CardStyle}" Padding="22">
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="360" />
+          </Grid.ColumnDefinitions>
+          <StackPanel>
+            <TextBlock Text="NVIDIA 控制面板全局预设" Style="{StaticResource SectionTitleStyle}" />
+            <TextBlock Text="选择预设并写入 NVIDIA 全局配置，无需安装 Profile Inspector。" Margin="0,5,0,18" Style="{StaticResource SecondaryTextStyle}" TextWrapping="Wrap" />
+            <TextBlock Text="选择预设" Style="{StaticResource FieldLabelStyle}" />
+            <ComboBox ItemsSource="{Binding NvidiaProfilePresets}" SelectedItem="{Binding SelectedNvidiaProfilePreset}">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                  <Grid Margin="0,2">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="*" />
+                      <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                      <TextBlock FontSize="14" FontWeight="SemiBold" Text="{Binding Name}" />
+                      <TextBlock Margin="0,2,12,0" FontSize="12" Foreground="{DynamicResource TertiaryTextBrush}" Text="{Binding Description}" />
+                    </StackPanel>
+                    <TextBlock Grid.Column="1" FontSize="12" VerticalAlignment="Center" Foreground="{DynamicResource AccentBrush}" Text="{Binding SettingCountLabel}" />
+                  </Grid>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ComboBox>
+            <Grid Margin="0,18,0,0">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+              </Grid.ColumnDefinitions>
+              <TextBlock Margin="0,0,20,0" Style="{StaticResource SecondaryTextStyle}" TextWrapping="Wrap" VerticalAlignment="Center" Text="{Binding NvidiaProfilePresetStatus}" />
+              <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <Button Content="恢复首次导入前设置" Style="{StaticResource QuietButtonStyle}" Margin="0,0,8,0" Command="{Binding RestoreNvidiaProfilePresetCommand}" IsEnabled="{Binding HasNvidiaProfilePresetBackup}" />
+                <Button Content="应用所选预设" Style="{StaticResource AccentButtonStyle}" Command="{Binding ApplyNvidiaProfilePresetCommand}" />
+              </StackPanel>
+            </Grid>
+          </StackPanel>
+          <Border Grid.Column="2" Style="{StaticResource RaisedCardStyle}" Padding="18">
+            <StackPanel>
+              <TextBlock Text="导入方式" Style="{StaticResource CardTitleStyle}" />
+              <TextBlock Text="内置 NIP 解析与 NVIDIA DRS 写入" Margin="0,7,0,12" Style="{StaticResource SecondaryTextStyle}" TextWrapping="Wrap" />
+              <TextBlock Text="01  解析预设" FontSize="14" FontWeight="SemiBold" />
+              <TextBlock Text="02  写入 NVIDIA 全局配置" Margin="0,9,0,0" FontSize="14" FontWeight="SemiBold" TextWrapping="Wrap" />
+              <TextBlock Text="03  保存并回读验证" Margin="0,9,0,0" FontSize="14" FontWeight="SemiBold" TextWrapping="Wrap" />
+              <Border Margin="0,16,0,0" Padding="12" CornerRadius="8" Background="{DynamicResource AccentSurfaceBrush}">
+                <TextBlock Text="应用后将修改 NVIDIA 驱动配置。" FontSize="12" LineHeight="19" TextWrapping="Wrap" Foreground="{DynamicResource SecondaryTextBrush}" />
+              </Border>
+            </StackPanel>
+          </Border>
+        </Grid>
+      </Border>
+      <Border Style="{StaticResource CardStyle}" Padding="22" Margin="0,12,0,0" BorderBrush="{DynamicResource AccentStrongBrush}">
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="360" />
+          </Grid.ColumnDefinitions>
+          <StackPanel>
+            <StackPanel Orientation="Horizontal">
+              <TextBlock Text="禁用 NVIDIA 动态 P-State" Style="{StaticResource SectionTitleStyle}" />
+              <Border Margin="10,1,0,0" Padding="8,3" CornerRadius="9" Background="{DynamicResource AccentSurfaceBrush}">
+                <TextBlock Text="高风险" FontSize="11" Foreground="{DynamicResource AccentBrush}" />
+              </Border>
+            </StackPanel>
+            <TextBlock Text="减少显卡在低频与高频状态之间频繁切换，可尝试缓解由降频或频率波动造成的卡顿和延迟" Margin="0,6,0,0" Style="{StaticResource SecondaryTextStyle}" TextWrapping="Wrap" />
+            <Border Margin="0,16,0,0" Padding="13" CornerRadius="8" Background="{DynamicResource AccentSurfaceBrush}">
+              <TextBlock FontSize="12" LineHeight="19" TextWrapping="Wrap" Foreground="{DynamicResource SecondaryTextBrush}" Text="{Binding NvidiaPowerStateStatus}" />
+            </Border>
+            <StackPanel Orientation="Horizontal" Margin="0,16,0,0">
+              <Button Content="恢复原设置" Style="{StaticResource QuietButtonStyle}" Margin="0,0,8,0" Command="{Binding RestoreNvidiaPowerStateCommand}" IsEnabled="{Binding HasNvidiaPowerStateBackup}" />
+              <Button Content="禁用动态 P-State" Style="{StaticResource AccentButtonStyle}" Command="{Binding ApplyNvidiaPowerStateCommand}" />
+            </StackPanel>
+          </StackPanel>
+          <Border Grid.Column="2" Style="{StaticResource RaisedCardStyle}" Padding="18">
+            <StackPanel>
+              <TextBlock Text="效果与影响" Style="{StaticResource CardTitleStyle}" />
+              <TextBlock Text="如果卡顿来自显卡频率频繁升降，禁用动态 P-State 可能让帧时间和操作延迟更稳定；它不是所有游戏都能获得的帧率提升。" Margin="0,8,0,0" Style="{StaticResource SecondaryTextStyle}" TextWrapping="Wrap" LineHeight="20" />
+              <TextBlock Text="待机功耗、温度和风扇噪声可能上升，笔记本续航可能缩短。建议台式机或确认存在降频卡顿时使用；重启后完整生效，重装显卡驱动后可能需要重新应用。" Margin="0,10,0,0" FontSize="12" Foreground="{DynamicResource TertiaryTextBrush}" TextWrapping="Wrap" LineHeight="19" />
+            </StackPanel>
+          </Border>
+        </Grid>
+      </Border>
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

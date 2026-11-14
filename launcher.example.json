@@ -1,0 +1,47 @@
+{
+  "programs": [
+    {
+      "name": "CPU-Z",
+      "exe": "CPUZ\\cpuz_x64.exe"
+    },
+    {
+      "name": "DDU",
+      "exe": "DDU\\Display Driver Uninstaller.exe"
+    },
+    {
+      "name": "Dism++",
+      "exe": "Dism++\\Dism++x64.exe"
+    },
+    {
+      "name": "Everything",
+      "exe": "Everything\\everything.exe"
+    },
+    {
+      "name": "GPU-Z",
+      "exe": "GPUZ\\GPU-Z.exe"
+    },
+    {
+      "name": "NVIDIA Inspector",
+      "exe": "nvidiaInspector\\nvidiaInspector.exe"
+    },
+    {
+      "name": "Profile Inspector",
+      "exe": "nvidiaProfileInspector\\nvidiaProfileInspector.exe"
+    },
+    {
+      "name": "Ryzen Tool",
+      "exe": "ryzen\\SMUDebugTool.exe"
+    },
+    {
+      "name": "TM5",
+      "exe": "tm5\\TM5.exe"
+    },
+    {
+      "name": "ZenTimings",
+      "exe": "ZenTimings\\ZenTimings.exe"
+    }
+  ],
+  "optimizerExe": "Extras/AeroficsOptimizer-2.0.0.exe",
+  "tunerExe": "Extras/ZeroCpuTuner.exe",
+  "voltageProvider": "HwInfoThenAmdSmu"
+}

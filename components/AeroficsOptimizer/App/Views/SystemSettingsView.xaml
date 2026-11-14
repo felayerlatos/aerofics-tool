@@ -1,0 +1,136 @@
+<UserControl x:Class="SystemOptimizer.App.Views.SystemSettingsView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Name="Root">
+<ScrollViewer Margin="0,8,0,0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+          <StackPanel Margin="0,0,8,24">
+            <Grid Margin="0,0,0,14">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="12" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="12" />
+                <ColumnDefinition Width="*" />
+              </Grid.ColumnDefinitions>
+              <Border Style="{StaticResource CardStyle}" Padding="17">
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                  </Grid.ColumnDefinitions>
+                  <StackPanel>
+                    <TextBlock Text="设备管理器" FontSize="16" FontWeight="SemiBold" />
+                    <TextBlock Text="检查设备、驱动和硬件状态" Margin="0,5,0,0" Style="{StaticResource CaptionTextStyle}" />
+                  </StackPanel>
+                  <Button Grid.Column="1" Content="打开" Style="{StaticResource QuietButtonStyle}" Command="{Binding OpenDeviceManagerCommand}" />
+                </Grid>
+              </Border>
+              <Border Grid.Column="2" Style="{StaticResource CardStyle}" Padding="17">
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                  </Grid.ColumnDefinitions>
+                  <StackPanel>
+                    <TextBlock Text="视觉性能选项" FontSize="16" FontWeight="SemiBold" />
+                    <TextBlock Text="打开 Windows 原生详细设置" Margin="0,5,0,0" Style="{StaticResource CaptionTextStyle}" />
+                  </StackPanel>
+                  <Button Grid.Column="1" Content="打开" Style="{StaticResource QuietButtonStyle}" Command="{Binding OpenVisualEffectsCommand}" />
+                </Grid>
+              </Border>
+              <Border Grid.Column="4" Style="{StaticResource CardStyle}" Padding="17">
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                  </Grid.ColumnDefinitions>
+                  <StackPanel>
+                    <TextBlock Text="VBS / 内存完整性" FontSize="16" FontWeight="SemiBold" />
+                    <TextBlock Margin="0,5,10,0" FontSize="12" TextTrimming="CharacterEllipsis" Foreground="{DynamicResource SecondaryTextBrush}" Text="{Binding VbsStatus}" />
+                  </StackPanel>
+                  <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <Button Content="恢复" Style="{StaticResource QuietButtonStyle}" Margin="0,0,6,0" Command="{Binding RestoreVbsCommand}" />
+                    <Button Content="关闭" Style="{StaticResource DangerButtonStyle}" Command="{Binding DisableVbsCommand}" />
+                  </StackPanel>
+                </Grid>
+              </Border>
+            </Grid>
+            <Border Style="{StaticResource CardStyle}" Padding="16" Margin="0,0,0,14">
+              <Grid>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel>
+                  <TextBlock Text="系统优化中心" Style="{StaticResource SectionTitleStyle}" />
+                  <TextBlock Text="每项可独立应用与恢复" Margin="0,4,0,0" Style="{StaticResource SecondaryTextStyle}" />
+                </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                  <TextBlock FontSize="12" Foreground="{DynamicResource SecondaryTextBrush}" VerticalAlignment="Center" Margin="0,0,12,0" Text="{Binding SystemOptimizationStatus}" />
+                  <Button Content="刷新优化项" Style="{StaticResource QuietButtonStyle}" Command="{Binding RefreshOptimizationsCommand}" />
+                </StackPanel>
+              </Grid>
+            </Border>
+            <ItemsControl ItemsSource="{Binding OptimizationGroups}">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                  <StackPanel Margin="0,0,0,12">
+                    <TextBlock FontSize="18" FontWeight="SemiBold" Margin="2,4,0,10" Text="{Binding Title}" />
+                    <ItemsControl ItemsSource="{Binding Items}">
+                      <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                          <UniformGrid Columns="3" />
+                        </ItemsPanelTemplate>
+                      </ItemsControl.ItemsPanel>
+                      <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                          <Border Margin="0,0,12,12">
+                            <FrameworkElement.Style>
+                              <Style BasedOn="{StaticResource CardStyle}" TargetType="{x:Type Border}">
+                                <Setter Property="Border.Padding" Value="17" />
+                                <Setter Property="MinHeight" Value="174" />
+                                <Style.Triggers>
+                                  <DataTrigger Value="True" Binding="{Binding IsApplied}">
+                                    <Setter Property="BorderBrush" Value="{DynamicResource AccentStrongBrush}" />
+                                  </DataTrigger>
+                                </Style.Triggers>
+                              </Style>
+                            </FrameworkElement.Style>
+                            <Grid>
+                              <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                              </Grid.RowDefinitions>
+                              <Grid>
+                                <Grid.ColumnDefinitions>
+                                  <ColumnDefinition Width="*" />
+                                  <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock FontSize="16" FontWeight="SemiBold" Text="{Binding Title}" />
+                                <Border Grid.Column="1" Padding="7,3" CornerRadius="8" Background="{DynamicResource SurfaceRaisedBrush}">
+                                  <TextBlock FontSize="11" Foreground="{DynamicResource SecondaryTextBrush}" Text="{Binding RiskLabel}" />
+                                </Border>
+                              </Grid>
+                              <StackPanel Grid.Row="1" Margin="0,8,0,12">
+                                <TextBlock FontSize="12.5" LineHeight="19" TextWrapping="Wrap" Foreground="{DynamicResource SecondaryTextBrush}" Text="{Binding Description}" />
+                                <TextBlock FontSize="11.5" Margin="0,7,0,0" Foreground="{DynamicResource AccentBrush}" Text="{Binding StateLabel}" />
+                              </StackPanel>
+                              <Grid Row="2">
+                                <Grid.ColumnDefinitions>
+                                  <ColumnDefinition Width="*" />
+                                  <ColumnDefinition Width="8" />
+                                  <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Button Style="{StaticResource AccentButtonStyle}" Content="{Binding ApplyLabel}" Command="{Binding DataContext.ApplyOptimizationCommand, ElementName=Root}" CommandParameter="{Binding}" />
+                                <Button Grid.Column="2" Content="恢复" Style="{StaticResource QuietButtonStyle}" IsEnabled="{Binding CanRestore}" Command="{Binding DataContext.RestoreOptimizationCommand, ElementName=Root}" CommandParameter="{Binding}" />
+                              </Grid>
+                            </Grid>
+                          </Border>
+                        </DataTemplate>
+                      </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                  </StackPanel>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </StackPanel>
+        </ScrollViewer>
+</UserControl>
